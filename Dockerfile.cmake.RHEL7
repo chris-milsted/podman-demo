@@ -1,0 +1,12 @@
+# Base the image on the standard C++ stack
+FROM registry.access.redhat.com/codeready-workspaces/stacks-cpp
+
+# Change to root, remove RHEL7 cmake as too old, enable EPEL and then install cmake3 and lastly clean up cache
+# and then set back to user jboss
+USER root
+RUN  yum -y remove cmake && yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && yum -y install cmake3 && yum clean all
+USER jboss
+
+# IMPORTANT: The Dockerfile has to end with a non-terminating CMD. This works
+# as well as any....
+CMD tail -f /dev/null 
